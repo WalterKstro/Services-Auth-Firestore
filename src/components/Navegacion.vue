@@ -1,12 +1,22 @@
 <template>
-  <div class="hello">
-    <h1>Main Dashboard</h1>
-  </div>
+  <nav class="navbar container d-flex">
+    <router-link :to="{name: 'Home'}" v-if="getStateUser">Home</router-link>
+    <router-link :to="{ name : 'Register'}" v-if="!getStateUser">Register</router-link>
+    <router-link :to="{ name : 'Login'}" v-if="!getStateUser">Log In</router-link>
+    <a  href="#" @click="closeSessions" v-if="getStateUser">Sing out</a>    
+  </nav>
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 export default {
-  name: 'HelloWorld'
+  name: 'Navegacion',
+  methods: {
+    ...mapActions(['closeSessions'])
+  },
+  computed: {
+    ...mapGetters(['getStateUser'])
+  }
 }
 </script>
 
