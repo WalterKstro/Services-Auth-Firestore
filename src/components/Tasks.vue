@@ -7,6 +7,7 @@
             </svg>
         </button>
       </router-link>
+
       <table class="table table-sm table-striped">
         <thead>
           <tr>
@@ -17,7 +18,8 @@
             <th scope="col" colspan="2">Operations</th>
           </tr>
         </thead>
-        <tbody>
+        <HourGlass v-if="stateLoading"></HourGlass>
+        <tbody v-else>
           <tr v-for="(task, index) in arrayListTasks" :key="task.id">
             <th>{{ task.id }}</th>
             <td>{{ task.name }}</td>
@@ -48,6 +50,7 @@
 </template>
 
 <script>
+import {HourGlass} from 'vue-loading-spinner'
 import { mapActions, mapState } from 'vuex'
 
 export default {
@@ -60,10 +63,19 @@ export default {
     ...mapActions( ['getCollectionsFromFirebase','deleteOneDocumentFirestore'] )
   },
   computed : {
-    ...mapState ( ['arrayListTasks'] )
+    ...mapState ( ['arrayListTasks','stateLoading'] )
+  },
+  components: {
+    HourGlass
   }
 }
 </script>
 
 <style lang="css" scoped>
+.table{position: relative;}
+.spinner{
+  position: absolute;
+  left: 50%;
+  top: 100px;
+}
 </style>

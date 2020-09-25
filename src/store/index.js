@@ -12,9 +12,21 @@ export default new Vuex.Store({
 
     arrayListTasks : [],
     oneDocument : '',
-    errorFirestore: undefined
+    errorFirestore: undefined,
+
+    stateLoading: null
   },
   mutations: {
+
+
+      /**
+       * State loading effect
+       * @param state
+       * @param conditional
+       */
+      setStateLoading(state, conditional) {
+        state.stateLoading = conditional
+      },
 
 
     /**
@@ -131,13 +143,15 @@ export default new Vuex.Store({
      * @param {*} user 
      */
     async signInUsername ({commit}, user) {
+      commit('setStateLoading', true)
       await auth.signInWithEmailAndPassword(user.email, user.pass)
       .then( response => {
         commit('setNewAccount',{email : response.user.email, id : response.user.uid})
+        commit('setStateLoading', false)
         router.push({name:'Home'})
       })
       .catch( error =>{
-        commit('setErrorNewAccount', error)
+        commit('setErrorNewAccount', error.message)
       })
     },
 
@@ -178,6 +192,7 @@ export default new Vuex.Store({
   	 */
       getCollectionsFromFirebase ( {commit,state} ) {
           let tasks = []
+        commit('setStateLoading', true)
           db.collection( state.user.email ).get()
           .then( querySnapshot => {
             querySnapshot.forEach( doc => {
@@ -185,6 +200,7 @@ export default new Vuex.Store({
               task.id = doc.id
               tasks.push ( task )
             })
+              commit('setStateLoading', false)
           })
           /**
            * Throw a commit
