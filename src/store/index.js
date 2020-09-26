@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {auth, db} from '../init-firebase.js'
+import {auth, db} from '@/init-firebase'
 import router from '@/router/index.js'
 
 Vue.use(Vuex)
