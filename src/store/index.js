@@ -14,10 +14,18 @@ export default new Vuex.Store({
     oneDocument : '',
     errorFirestore: undefined,
 
-    stateLoading: null
+    stateLoading: null,
+    search: ''
   },
   mutations: {
-
+      /**
+       * Set word search filter
+       * @param state
+       * @param word
+       */
+      setWordSearch(state, word) {
+          state.search = word
+      },
 
       /**
        * State loading effect
@@ -99,6 +107,16 @@ export default new Vuex.Store({
 
   },
   actions: {
+
+
+      /**
+       * Get word filter search
+       * @param commit
+       * @param word
+       */
+      getWordInputSearch({commit}, word) {
+          commit('setWordSearch', word.toLowerCase())
+      },
 
 
     /**
@@ -300,7 +318,7 @@ export default new Vuex.Store({
 
     /**
      * Get error
-     * @param {*} state 
+     * @param {*} state
      */
     getError( state ) {
       return state.error
@@ -309,11 +327,21 @@ export default new Vuex.Store({
 
     /**
      * Get state
-     * @param {*} state 
+     * @param {*} state
      */
     getStateUser (state) {
       return state.user
     },
+
+      /**
+       * Get filter search
+       * @param state
+       */
+      getFilterSearch(state) {
+        return state.arrayListTasks.filter( task => {
+            return task.name.toLowerCase().includes(state.search)
+        })
+      },
 
 
 

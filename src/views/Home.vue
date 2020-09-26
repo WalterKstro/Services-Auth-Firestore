@@ -1,17 +1,30 @@
 <template>
   <div class="home container">
-    <p>Bienvenido: <strong>{{ getStateUser.email }}</strong></p>
-    <Tasks />
+    <div class="row">
+      <div class="col-4 offset-4">
+        <Search />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <Tasks />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"><p>Bienvenido: <strong>{{ getStateUser.email }}</strong></p></div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import Tasks from '@/components/Tasks'
+import Search from "@/components/Search";
 export default {
   name: 'Home',
   components: {
-    Tasks
+    Tasks,
+    Search
   },
   computed: {
     ...mapGetters(['getStateUser'])
@@ -19,8 +32,5 @@ export default {
 }
 </script>
 <style lang="css" scoped>
- p{
-   position: absolute;
-   bottom: 2%;
- }
+ 
 </style>

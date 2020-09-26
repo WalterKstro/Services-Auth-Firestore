@@ -20,7 +20,7 @@
         </thead>
         <HourGlass v-if="stateLoading"></HourGlass>
         <tbody v-else>
-          <tr v-for="(task, index) in arrayListTasks" :key="task.id">
+          <tr v-for="(task, index) in getFilterSearch" :key="task.id">
             <th>{{ task.id }}</th>
             <td>{{ task.name }}</td>
             <td>{{ task.priory }}</td>
@@ -51,7 +51,7 @@
 
 <script>
 import {HourGlass} from 'vue-loading-spinner'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
 
@@ -63,7 +63,8 @@ export default {
     ...mapActions( ['getCollectionsFromFirebase','deleteOneDocumentFirestore'] )
   },
   computed : {
-    ...mapState ( ['arrayListTasks','stateLoading'] )
+    ...mapState ( ['arrayListTasks','stateLoading'] ),
+    ...mapGetters(['getFilterSearch'])
   },
   components: {
     HourGlass
